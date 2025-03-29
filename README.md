@@ -1,5 +1,5 @@
 # Clone the repository (replace USERNAME with your GitHub username)
-git clone https://github.com/USERNAME/birthday-website.git
+git clone https://github.com/Rasher01-cyber/birthday-website.git
 cd birthday-website
 
 # Add the files
