@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Birthday Celebration! 🎉">
+    <meta property="og:description" content="Join me in celebrating this special day!">
+    <meta property="og:image" content="my-image.jpg">
+    <title>Birthday Celebration! 🎉</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(45deg, #ff69b4, #87ceeb);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .gift-container {
+            width: 200px;
+            height: 200px;
+            margin: 40px auto;
+            position: relative;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+        .gift-box {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+        }
+        .gift-container.opened .gift-box {
+            transform: rotateX(180deg);
+        }
+        .gift-lid {
+            width: 100%;
+            height: 40px;
+            background: #ff1493;
+            position: absolute;
+            top: -20px;
+            transform-origin: bottom;
+            transition: transform 0.5s;
+        }
+        .gift-container:hover .gift-lid {
+            transform: rotateX(-20deg);
+        }
+        .gift-container.opened .gift-lid {
+            transform: rotateX(-180deg);
+        }
+        .gift-box-front {
+            width: 100%;
+            height: 100%;
+            background: #ff69b4;
+            position: absolute;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            border: 5px solid #ff1493;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+        .gift-box-back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            transform: rotateX(180deg);
+        }
+        .hidden-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        .gift-container.opened .hidden-image {
+            opacity: 1;
+        }
+        .ribbon {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #ff1493;
+            top: -15px;
+            left: 85px;
+            transform: rotate(45deg);
+        }
+        .ribbon::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #ff1493;
+            transform: rotate(90deg);
+        }
+        .text-content {
+            line-height: 1.6;
+            color: #333;
+            margin: 20px 0;
+        }
+        audio {
+            margin: 20px 0;
+            width: 100%;
+            display: none;
+        }
+        h1 {
+            color: #ff1493;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: rainbow 5s linear infinite;
+        }
+        @keyframes rainbow {
+            0% { color: #ff1493; }
+            25% { color: #ff4500; }
+            50% { color: #ff69b4; }
+            75% { color: #da70d6; }
+            100% { color: #ff1493; }
+        }
+        .balloon {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            background: #ff69b4;
+            border-radius: 50%;
+            animation: float-balloon 15s ease-in-out infinite;
+            opacity: 0.7;
+        }
+        .balloon::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background: #666;
+        }
+        @keyframes float-balloon {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+        .birthday-cake {
+            font-size: 50px;
+            margin: 20px 0;
+            animation: bounce 2s ease infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f00;
+            animation: confetti-fall 4s linear infinite;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+        .countdown {
+            font-size: 1.5em;
+            margin: 20px 0;
+            color: #ff1493;
+        }
+        .copy-link {
+            background: #ff1493;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+        .copy-link:hover {
+            background: #ff69b4;
+            transform: scale(1.05);
+        }
+        .copy-link:active {
+            transform: scale(0.98);
+        }
+        .copy-message {
+            color: #28a745;
+            font-size: 0.9em;
+            margin-top: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .copy-message.show {
+            opacity: 1;
+        }
+        .tap-instruction {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 10px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="birthday-cake">🎂</div>
+        <h1>Happiest Birthday Harshali! 🎉</h1>
+        
+        <div class="gift-container" onclick="openGift()">
+            <div class="gift-box">
+                <div class="gift-lid"></div>
+                <div class="ribbon"></div>
+                <div class="gift-box-front">🎁</div>
+                <div class="gift-box-back">
+                    <img src="Birthday.jpg" alt="Birthday Image" class="hidden-image">
+                </div>
+            </div>
+            <p class="tap-instruction">Tap to open your gift! 🎁</p>
+        </div>
+        
+        <div class="text-content">
+            <p>I Hope that you like my present! 🎈</p>
+            <p>May all your dreams and wishes come true! ✨</p>
+        </div>
+        
+        <div class="countdown">
+            <p>Sorry To Be Late (Birthday Girl): <span id="countdown-timer">Loading...</span></p>
+        </div>
+
+        <audio id="birthdaySong" loop>
+            <source src="Birthday.m4a" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+        <button class="copy-link" onclick="copyLink()">Copy Website Link</button>
+        <div id="copyMessage" class="copy-message">Link copied to clipboard! 📋</div>
+    </div>
+
+    <script>
+        // Add floating balloons
+        function createBalloons() {
+            const colors = ['#ff69b4', '#87ceeb', '#ffa500', '#98fb98', '#dda0dd'];
+            for(let i = 0; i < 10; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.left = Math.random() * 100 + 'vw';
+                balloon.style.animationDelay = Math.random() * 5 + 's';
+                balloon.style.background = colors[Math.floor(Math.random() * colors.length)];
+                document.body.appendChild(balloon);
+            }
+        }
+
+        // Add confetti
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
+            for(let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                document.body.appendChild(confetti);
+            }
+        }
+
+        // Gift opening function
+        function openGift() {
+            const giftContainer = document.querySelector('.gift-container');
+            const birthdaySong = document.getElementById('birthdaySong');
+            
+            if (!giftContainer.classList.contains('opened')) {
+                giftContainer.classList.add('opened');
+                birthdaySong.play();
+            }
+        }
+
+        // Copy link function
+        function copyLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const message = document.getElementById('copyMessage');
+                message.classList.add('show');
+                setTimeout(() => {
+                    message.classList.remove('show');
+                }, 2000);
+            });
+        }
+
+        // Initialize animations
+        createBalloons();
+        createConfetti();
+
+        // Set birthday countdown
+        const birthday = new Date('2024-12-31'); // Change this to the actual birthday date
+        function updateCountdown() {
+            const now = new Date();
+            const difference = birthday - now;
+            
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                
+                document.getElementById('countdown-timer').textContent = 
+                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            } else {
+                document.getElementById('countdown-timer').textContent = "It's today! 🎉";
+            }
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html> 
